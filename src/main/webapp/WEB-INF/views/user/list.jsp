@@ -9,34 +9,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 18px;
-            text-align: left;
-        }
-        th, td {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f4f4f4;
-            font-weight: bold;
-        }
-        td {
-            text-align: center;
-            vertical-align: middle;
-        }
-    </style>
-</head>
-<body>
+<%@include file="/header.jsp" %>
+<div class="d-flex justify-content-between align-items-center">
 <h1>Lista Użytkowników</h1>
+    <a href="/user/add" class="btn btn-primary">Dodaj użytkownika</a>
+</div>
 
-<table>
+<table class="table">
     <tr>
         <th>Imię</th>
         <th>Nazwisko</th>
@@ -51,10 +30,11 @@
             <td>${user.email}</td>
             <td>${user.phone}</td>
             <td>${user.points}</td>
-            <td><a href="/user/edit/${user.id}" class="button-edit">Edytuj</a></td>
-            <td><a href="/user/delete/${user.id}" class="button-delete">Usuń</a></td>
+            <td><a href="/user/edit/${user.id}" class="btn btn-warning">Edytuj</a></td>
+            <td><a href="/user/delete/${user.id}" class="btn btn-danger">Usuń</a></td>
         </tr>
     </c:forEach>
 </table>
-</body>
+<%@include file="/footer.jsp" %>
+<%--</body>--%>
 </html>
