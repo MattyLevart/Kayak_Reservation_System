@@ -28,8 +28,6 @@ public class User {
     private long points;
     @OneToMany(mappedBy = "client")
     private List<Reservation> reservations;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 }

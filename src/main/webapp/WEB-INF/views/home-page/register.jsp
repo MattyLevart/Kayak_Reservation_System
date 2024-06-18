@@ -6,7 +6,7 @@
 <%@include file="/header.jsp"%>
 <div class="container">
   <h1 class="mt-5">Rejestracja</h1>
-  <form:form method="post" action="${pageContext.request.contextPath}/user/register" modelAttribute="user">
+  <form:form method="post" action="${pageContext.request.contextPath}/register" modelAttribute="user">
     <div class="form-group">
       <label for="firstName">Imię:</label>
       <form:input id="firstName" path="firstName" class="form-control"/>

@@ -14,14 +14,16 @@ import java.util.Collections;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private final UserSecService userSecService;
     private final UserRepository userRepository;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepository, UserService userService, BCryptPasswordEncoder passwordEncoder){
+    public UserController(UserRepository userRepository, UserService userService, BCryptPasswordEncoder passwordEncoder, UserSecService userSecService){
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.userSecService = userSecService;
     }
     @GetMapping("/home")
     public String showList(Model model, Principal principal){
@@ -63,27 +65,27 @@ public class UserController {
         return "redirect:/logout";
     }
 
-    @GetMapping("/register")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
-        return "home-page/register";
-    }
-    @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "home-page/register";
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        Role userRole = new Role();
-        userRole.setName("ROLE_USER");
-        user.setRoles(Collections.singleton(userRole));
-
-        userService.save(user);
-
-        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
-        return "redirect:/login";
-    }
+//    @GetMapping("/register")
+//    public String showRegistrationForm(Model model) {
+//        model.addAttribute("user", new User());
+//        return "home-page/register";
+//    }
+//    @PostMapping("/register")
+//    public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
+//        if (result.hasErrors()) {
+//            return "home-page/register";
+//        }
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//
+//        Role userRole = new Role();
+//        userRole.setName("ROLE_USER");
+//        user.setRoles(Collections.singleton(userRole));
+//
+//        userService.save(user);
+//
+//        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
+//        return "redirect:/login";
+//    }
 
 }
 
