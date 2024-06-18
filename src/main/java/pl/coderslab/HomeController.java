@@ -2,16 +2,18 @@ package pl.coderslab;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    @ResponseBody
-    public String home() { return "home"; }
+    public String homePage() { return "/home-page/landing-page"; }
 
-    @GetMapping("/about")
-    @ResponseBody
-    public String about() { return "Here you can find some details for logged users"; }
+    @GetMapping("/reservationForm")
+    public String showReservationForm() { return "home-page/reservationForm"; }
+
+    @GetMapping("/register")
+    public String showRegisterForm(){
+        return "home-page/register";
+    }
 }
