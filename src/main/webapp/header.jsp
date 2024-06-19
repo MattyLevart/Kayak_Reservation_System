@@ -43,6 +43,24 @@
       align-items: center;
       height: 100vh;
     }
+     .header-buttons {
+       position: absolute;
+       top: 10px;
+       right: 10px;
+     }
+    .header-buttons a {
+      margin-left: 10px;
+    }
+    .centered-button {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .full-width-image {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
+    }
   </style>
 </head>
 

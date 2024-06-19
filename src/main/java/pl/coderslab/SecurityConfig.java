@@ -22,15 +22,15 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/css/**", "/js/**", "/images/**", "/vendor").permitAll()
+               .antMatchers("/","/register", "/login").permitAll()
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/user/home", true)
-                .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
