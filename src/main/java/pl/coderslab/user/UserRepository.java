@@ -8,4 +8,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
     void deleteById(Long userId);
+
+    void deleteByEmail(String email);
+
+    User findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
+
+

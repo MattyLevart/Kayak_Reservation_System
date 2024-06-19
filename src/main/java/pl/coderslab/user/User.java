@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.coderslab.reservation.Reservation;
+import pl.coderslab.role.Role;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,7 +26,8 @@ public class User {
     private String email;
     private long phone;
     private long points;
-    private boolean idAdmin;
     @OneToMany(mappedBy = "client")
     private List<Reservation> reservations;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }

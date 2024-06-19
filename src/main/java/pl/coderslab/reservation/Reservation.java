@@ -9,6 +9,7 @@ import pl.coderslab.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -21,8 +22,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDateTime dateTime;
     private String placeOfStart;
     @ManyToMany
     @JoinTable(name = "reservation_kayak",
@@ -31,5 +31,6 @@ public class Reservation {
     private List<Kayak> kayaks;
     @ManyToOne
     private User client;
+    private String status;
 
 }

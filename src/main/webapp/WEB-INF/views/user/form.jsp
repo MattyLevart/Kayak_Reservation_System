@@ -1,36 +1,34 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: mateusz
-  Date: 12/06/2024
-  Time: 20:41
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
-<body>
-<h3>Dodaj kategorię</h3>
-<form:form method="post" modelAttribute="user">
-    <form:hidden path="id"/>
-    <label for="name">Imię:</label>
-    <form:input id="name" path="firstName"/>
-    <label for="lastN">Nazwisko:</label>
-    <form:input id="lastN" path="lastName"/>
-    <label for="phone">Telefon:</label>
-    <form:input id="phone" path="phone"/>
-    <label for="email">Email:</label>
-    <form:input id="email" path="email"/>
-    <label for="password">Hasło:</label>
-    <form:input id="password" path="password"/>
-    <label for="points">Punkty:</label>
-    <form:input id="points" path="points"/>
-    <label for="login">Login:</label>
-    <form:input id="login" path="userName"/>
-    <input type="submit">
-</form:form>
-</body>
+<%@include file="/header.jsp"%>
+<div class="container">
+    <h1 class="mt-5">Edycja Użytkownika</h1>
+    <form:form method="post" modelAttribute="user">
+        <div class="form-group">
+            <label for="firstName">Imię:</label>
+            <form:input id="firstName" path="firstName" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nazwisko:</label>
+            <form:input id="lastName" path="lastName" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="email">Mail:</label>
+            <form:input id="email" path="email" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="phone">Nr. tel:</label>
+            <form:input id="phone" path="phone" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="points">Punkty:</label>
+            <span id="points" class="form-control-plaintext">${user.points}</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form:form>
+</div>
+<%@include file="/footer.jsp"%>
 </html>

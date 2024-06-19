@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -28,6 +27,39 @@
   <style>
     .bg-gradient-orange {
       background: linear-gradient(180deg, #f86e1b, #fc934e);
+    }
+    .login-form {
+      width: 100%;
+      max-width: 400px;
+      padding: 15px;
+      margin: auto;
+    }
+    .login-form .form-control {
+      margin-bottom: 10px;
+    }
+    .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+     .header-buttons {
+       position: absolute;
+       top: 10px;
+       right: 10px;
+     }
+    .header-buttons a {
+      margin-left: 10px;
+    }
+    .centered-button {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .full-width-image {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
     }
   </style>
 </head>
