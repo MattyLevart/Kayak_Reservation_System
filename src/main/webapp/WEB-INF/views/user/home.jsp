@@ -2,15 +2,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@include file="/header.jsp"%>
 <div class="container">
     <h1>Witamy w systemie rezerwacji kajaków</h1>
     <a href="${pageContext.request.contextPath}/reservationForm" class="btn btn-primary">Zarezerwuj kajak</a>
     <c:choose>
-        <c:when test="${not empty principal}">
+        <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">
             <a href="${pageContext.request.contextPath}/user/home" class="btn btn-secondary">Moje konto</a>
         </c:when>
         <c:otherwise>
@@ -25,5 +22,5 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </sec:authorize>
-</body>
+<%@include file="/footer.jsp"%>
 </html>
