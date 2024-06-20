@@ -61,6 +61,26 @@
       height: 55vh;
       object-fit: cover;
     }
+     .confirmation-container {
+       text-align: center;
+       padding: 50px;
+       background-color: #d4edda;
+       border: 1px solid #c3e6cb;
+       border-radius: 5px;
+       margin-top: 50px;
+     }
+    .confirmation-container h1 {
+      color: #155724;
+    }
+    .confirmation-container h2 {
+      color: #0c5460;
+    }
+    .confirmation-container p {
+      color: #0c5460;
+    }
+    .confirmation-container .btn {
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -74,27 +94,37 @@ Wrapper -->
           class="navbar-nav bg-gradient-orange sidebar sidebar-dark accordion"
           id="accordionSidebar"
   >
-    <!-- Sidebar - Brand -->
-    <a
-            class="sidebar-brand d-flex align-items-center justify-content-center"
-            href="/userList"
-    >
-      <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-anchor"></i>
-      </div>
-      <div class="sidebar-brand-text mx-3">Adrena<sup>lina</sup></div>
-    </a>
+    <c:choose>
+      <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/home">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-anchor"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">Adrena<sup>lina</sup></div>
+        </a>
+      </c:when>
+      <c:otherwise>
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-anchor"></i>
+          </div>
+          <div class="sidebar-brand-text mx-3">Adrena<sup>lina</sup></div>
+        </a>
+      </c:otherwise>
+    </c:choose>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0"/>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-      <a class="nav-link" href="/user/list">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></a
-      >
-    </li>
+    <c:if test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">
+      <li class="nav-item active">
+        <a class="nav-link" href="/user/reservations">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Twoje rezerwacje</span>
+        </a>
+      </li>
+    </c:if>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
