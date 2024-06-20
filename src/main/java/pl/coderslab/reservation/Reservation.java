@@ -5,10 +5,7 @@ import pl.coderslab.kayak.Kayak;
 import pl.coderslab.user.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,11 +20,16 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull(message = "Data i godzina nie mogą być puste")
     private LocalDateTime dateTime;
+    @NotEmpty(message = "Miejsce startu nie może być puste")
     private String placeOfStart;
 
+    @Min(value = 0, message = "Liczba miejsc dla dzieci nie może być ujemna")
     private int babySeats;
+    @Min(value = 0, message = "Liczba kajaków jednoosobowych nie może być ujemna")
     private int singleKayaks;
+    @Min(value = 0, message = "Liczba kajaków dwuosobowych nie może być ujemna")
     private int doubleKayaks;
 
     @ManyToMany

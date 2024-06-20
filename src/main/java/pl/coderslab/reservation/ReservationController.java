@@ -49,7 +49,6 @@ public class ReservationController {
     @PostMapping("/reservationForm")
     public String processReservationForm(@ModelAttribute("reservation") @Valid Reservation reservation, BindingResult result, Principal principal, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("error", "Formularz zawiera błędy");
             return "home-page/reservationForm";
         }
 
@@ -96,7 +95,9 @@ public class ReservationController {
         }
 
         if (singleKayaks > 0 || doubleKayaks > 0 || requiredBabyKayaks > 0) {
-            model.addAttribute("error", "Brak wystarczającej liczby dostępnych kajaków na wybrany termin.");
+            model.addAttribute("error", "Brak wystarczającej liczby dostępnych kajaków na wybrany termin.\n" +
+                    "Spróbuj zamienić kajaki z dziećmi lub kajaki jednoosobowe na dwuosobowe.\n" +
+                    "W razie niepowodzenia prosimy wybrać inną datę spływu kajakowego.");
             return "home-page/reservationForm";
         }
 

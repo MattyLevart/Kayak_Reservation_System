@@ -3,13 +3,17 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<%@include file="/header.jsp"%>
+<%@include file="/header.jsp" %>
 <div class="container">
     <h2>Formularz rezerwacji</h2>
-    <form:form modelAttribute="reservation" method="post" class="form-horizontal">
-        <div class="form-group">
-            <form:errors path="*" cssClass="alert alert-danger" />
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger">
+            <p>${error}</p>
         </div>
+    </c:if>
+
+    <form:form modelAttribute="reservation" method="post" class="form-horizontal">
+
         <div class="form-group">
             <label for="dateTime">Data i godzina:</label>
             <form:input path="dateTime" type="datetime-local" class="form-control"/>
@@ -37,7 +41,7 @@
         </div>
         <div class="form-group">
             <label for="babySeats">Liczba miejsc dla dzieci:</label>
-            <form:input id="babySeats" path="babySeats" type="number" min="0" class="form-control" value="0" />
+            <form:input id="babySeats" path="babySeats" type="number" min="0" class="form-control" value="0"/>
             <form:errors path="babySeats" cssClass="text-danger"/>
         </div>
         <c:if test="${empty principal}">
@@ -67,5 +71,5 @@
         </div>
     </form:form>
 </div>
-<%@include file="/footer.jsp"%>
+<%@include file="/footer.jsp" %>
 </html>
