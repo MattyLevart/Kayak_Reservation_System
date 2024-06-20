@@ -1,6 +1,7 @@
 package pl.coderslab.reservation;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import pl.coderslab.kayak.Kayak;
 import pl.coderslab.user.User;
 
@@ -20,8 +21,12 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotNull(message = "Data i godzina nie mogą być puste")
-    private LocalDateTime dateTime;
+    @NotNull(message = "Data nie może być pusta")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate date;
+    @NotNull(message = "Wybierz godzinę spływu")
+    private int hour;
+
     @NotEmpty(message = "Miejsce startu nie może być puste")
     private String placeOfStart;
 

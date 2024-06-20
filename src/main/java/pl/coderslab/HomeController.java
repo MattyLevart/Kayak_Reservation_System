@@ -36,10 +36,6 @@ public class HomeController {
     @GetMapping("/")
     public String homePage() { return "/home-page/landing-page"; }
 
-//    @GetMapping("/reservationForm")
-//    public String showReservationForm(Model model) {
-//        model.addAttribute("reservation", new Reservation());
-//        return "home-page/reservationForm"; }
 
     @GetMapping("/register")
     public String showRegisterForm(Model model){
