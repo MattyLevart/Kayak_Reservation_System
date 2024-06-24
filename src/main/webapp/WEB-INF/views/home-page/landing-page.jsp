@@ -8,15 +8,8 @@
   <h2>W systemie rezerwacji kajaków</h2>
   <div class="container">
     <div class="header-buttons">
-<%--      <c:choose>--%>
-<%--        <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">--%>
-<%--          <a href="${pageContext.request.contextPath}/user/home" class="btn btn-secondary">Moje konto</a>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
           <a href="${pageContext.request.contextPath}/login" class="btn btn-secondary">Zaloguj się</a>
           <a href="${pageContext.request.contextPath}/register" class="btn btn-secondary">Załóż konto</a>
-<%--        </c:otherwise>--%>
-<%--      </c:choose>--%>
     </div>
     <div class="centered-button">
       <a href="${pageContext.request.contextPath}/reservationForm" class="btn btn-primary">Zarezerwuj kajak</a>

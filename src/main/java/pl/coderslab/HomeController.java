@@ -15,6 +15,7 @@ import pl.coderslab.user.UserRepository;
 import pl.coderslab.user.UserSecService;
 import pl.coderslab.user.UserService;
 
+import javax.validation.Valid;
 import java.util.Collections;
 
 @Controller
@@ -44,19 +45,19 @@ public class HomeController {
         return "home-page/register";
     }
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
+    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "home-page/register";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = new Role();
-        userRole.setName("ROLE_USER");
-        user.setRoles(Collections.singleton(userRole));
+//        Role userRole = new Role();
+//        userRole.setName("ROLE_USER");
+//        user.setRoles(Collections.singleton(userRole));
 
         userService.save(user);
 
-        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
+//        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
         return "redirect:/login";
     }
 }

@@ -124,6 +124,26 @@ Wrapper -->
           <span>Twoje rezerwacje</span>
         </a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/user/details">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dane konta</span>
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/user/history">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Historia rezerwacji i punkty</span>
+        </a>
+      </li>
+      <li class="nav-item active text-center">
+        <sec:authorize access="isAuthenticated()">
+          <form action="<c:url value="/logout"/>" method="post">
+            <input type="submit" value="Wyloguj">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          </form>
+        </sec:authorize>
+      </li>
     </c:if>
 
     <!-- Sidebar Toggler (Sidebar) -->
