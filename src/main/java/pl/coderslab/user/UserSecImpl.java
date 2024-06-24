@@ -18,18 +18,19 @@ public class UserSecImpl implements UserSecService{
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-    }
 
+    }
+//Potrzebne i użyte w SpringDataUserDetailsService
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    @Override
-    public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role userRole = roleRepository.findByName("ROLE_USER");
-        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
-        userRepository.save(user);
-    }
+//    @Override
+//    public void saveUser(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        Role userRole = roleRepository.findByName("ROLE_USER");
+//        user.setRoles(new HashSet<>(Arrays.asList(userRole)));
+//        userRepository.save(user);
+//    }
 }

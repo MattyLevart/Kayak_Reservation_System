@@ -54,7 +54,7 @@
             <form:errors path="doubleKayaks" cssClass="text-danger"/>
         </div>
         <div class="form-group">
-            <label for="babySeats">Liczba miejsc dla dzieci:</label>
+            <label for="babySeats">Liczba kajaków z dostawką (2 dorosłych + dziecko do lat 4):</label>
             <form:input id="babySeats" path="babySeats" type="number" min="0" class="form-control" value="0"/>
             <form:errors path="babySeats" cssClass="text-danger"/>
         </div>

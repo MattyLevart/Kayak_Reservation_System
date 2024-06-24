@@ -1,40 +1,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%--
-  Created by IntelliJ IDEA.
-  User: mateusz
-  Date: 13/06/2024
-  Time: 11:12
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%@include file="/header.jsp" %>
 <div class="d-flex justify-content-between align-items-center">
-<h1>Lista Użytkowników</h1>
-    <a href="/user/add" class="btn btn-primary">Dodaj użytkownika</a>
+<h1>Twoje Dane:</h1>
 </div>
 
 <table class="table">
     <tr>
         <th>Imię</th>
-        <th>Nazwisko</th>
-        <th>Email</th>
-        <th>Telefon</th>
-        <th>Punkty</th>
+        <td>${user.firstName}</td>
     </tr>
-    <c:forEach items="${users}" var="user">
-        <tr>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}</td>
-            <td>${user.email}</td>
-            <td>${user.phone}</td>
-            <td>${user.points}</td>
-            <td><a href="/user/edit/${user.id}" class="btn btn-warning">Edytuj</a></td>
-            <td><a href="/user/delete/${user.id}" class="btn btn-danger">Usuń</a></td>
-        </tr>
-    </c:forEach>
+    <tr>
+        <th>Nazwisko</th>
+        <td>${user.lastName}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>${user.email}</td>
+    </tr>
+    <tr>
+        <th>Telefon</th>
+        <td>${user.phone}</td>
+    </tr>
+    <tr>
+        <th>Zebrane punkty</th>
+        <td>${user.points}</td>
+    </tr>
 </table>
+
+<div class="text-center">
+    <a href="/user/edit" class="btn btn-warning">Edytuj Dane Konta</a>
+    <a href="/user/delete" class="btn btn-danger">Usuń Konto</a>
+</div>
 <%@include file="/footer.jsp" %>
-<%--</body>--%>
 </html>

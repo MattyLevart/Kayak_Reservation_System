@@ -23,6 +23,7 @@ public class Reservation {
     private long id;
     @NotNull(message = "Data nie może być pusta")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @Future(message = "Wybierz prawidłową datę")
     private LocalDate date;
     @NotNull(message = "Wybierz godzinę spływu")
     private int hour;
