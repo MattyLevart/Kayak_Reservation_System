@@ -1,5 +1,6 @@
 package pl.coderslab.reservation;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import pl.coderslab.user.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,22 +54,23 @@ public class ReservationController {
             return "home-page/reservationForm";
         }
 
-        // Extract form data
-        LocalDateTime dateTime = reservation.getDateTime();
+
+        LocalDate date = reservation.getDate();
+        int hour = reservation.getHour();
+        LocalDateTime dateTime = date.atTime(hour, 0);
+
+        List<Kayak> availableKayaks = reservationService.findAvailableKayaks(date);
+
         int singleKayaks = reservation.getSingleKayaks();
         int doubleKayaks = reservation.getDoubleKayaks();
         int babySeats = reservation.getBabySeats();
         String placeOfStart = reservation.getPlaceOfStart();
 
-        // Check availability of kayaks
-        LocalDateTime startOfDay = dateTime.toLocalDate().atStartOfDay();
-        LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
-        List<Kayak> availableKayaks = reservationService.findAvailableKayaks(startOfDay, endOfDay);
 
         List<Kayak> selectedKayaks = new ArrayList<>();
         int requiredBabyKayaks = babySeats;
 
-        // Select single kayaks
+
         for (Kayak kayak : availableKayaks) {
             if (singleKayaks > 0 && kayak.getPlaces() == 1) {
                 selectedKayaks.add(kayak);
@@ -76,7 +79,6 @@ public class ReservationController {
             if (singleKayaks == 0) break;
         }
 
-        // Select double kayaks
         for (Kayak kayak : availableKayaks) {
             if (doubleKayaks > 0 && kayak.getPlaces() == 2) {
                 selectedKayaks.add(kayak);
@@ -85,7 +87,6 @@ public class ReservationController {
             if (doubleKayaks == 0) break;
         }
 
-        // Select kayaks with baby option
         for (Kayak kayak : availableKayaks) {
             if (requiredBabyKayaks > 0 && kayak.isBabyOption()) {
                 selectedKayaks.add(kayak);
@@ -101,7 +102,6 @@ public class ReservationController {
             return "home-page/reservationForm";
         }
 
-        // Set kayaks and status
         reservation.setKayaks(selectedKayaks);
         reservation.setStatus("in progress");
 

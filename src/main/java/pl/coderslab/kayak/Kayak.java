@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.coderslab.reservation.Reservation;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Setter
@@ -29,5 +28,10 @@ public class Kayak {
     private int places;
     private boolean babyOption;
     private String description;
+    @ManyToMany
+    @JoinTable(name = "reservation_kayak",
+            joinColumns = @JoinColumn(name = "kayak_id"),
+            inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+    private List<Reservation> reservations;
 
 }

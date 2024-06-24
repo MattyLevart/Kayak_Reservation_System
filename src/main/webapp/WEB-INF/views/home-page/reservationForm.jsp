@@ -15,9 +15,23 @@
     <form:form modelAttribute="reservation" method="post" class="form-horizontal">
 
         <div class="form-group">
-            <label for="dateTime">Data i godzina:</label>
-            <form:input path="dateTime" type="datetime-local" class="form-control"/>
-            <form:errors path="dateTime" cssClass="text-danger"/>
+            <label for="date">Data:</label>
+            <form:input path="date" type="date" class="form-control"/>
+            <form:errors path="date" cssClass="text-danger"/>
+        </div>
+        <div class="form-group">
+            <label for="hour">Godzina:</label>
+            <form:select path="hour" class="form-control">
+                <form:option value="8">8:00</form:option>
+                <form:option value="9">9:00</form:option>
+                <form:option value="10">10:00</form:option>
+                <form:option value="11">11:00</form:option>
+                <form:option value="12">12:00</form:option>
+                <form:option value="13">13:00</form:option>
+                <form:option value="14">14:00</form:option>
+                <form:option value="15">15:00</form:option>
+            </form:select>
+            <form:errors path="hour" cssClass="text-danger"/>
         </div>
         <div class="form-group">
             <label for="placeOfStart">Miejsce startu:</label>
