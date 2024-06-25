@@ -38,14 +38,33 @@ public class ReservationController {
 
 
     @GetMapping("/reservationForm")
-    public String showReservationForm(Model model, Principal principal) {
-        Reservation reservation = new Reservation();
-        if (principal != null) {
-            User user = userService.findByEmail(principal.getName());
-            reservation.setFirstName(user.getFirstName());
-            reservation.setLastName(user.getLastName());
-            reservation.setEmail(user.getEmail());
-            reservation.setPhone(String.valueOf(user.getPhone()));
+    public String showReservationForm(@RequestParam(value = "id", required = false) Long resId, Model model, @AuthenticationPrincipal UserDetails currentUser) {
+        Reservation reservation;
+
+        if (resId != null) {
+            Optional<Reservation> optionalReservation = reservationService.findById(resId);
+            if (optionalReservation.isPresent()) {
+                reservation = optionalReservation.get();
+                if (currentUser != null) {
+                    User user = userService.findByEmail(currentUser.getUsername());
+                    if (reservation.getClient().getId() != user.getId()) {
+                        return "redirect:/user/reservations";
+                    }
+                } else {
+                    return "redirect:/user/reservations";
+                }
+            } else {
+                return "redirect:/user/reservations";
+            }
+        } else {
+            reservation = new Reservation();
+            if (currentUser != null) {
+                User user = userService.findByEmail(currentUser.getUsername());
+                reservation.setFirstName(user.getFirstName());
+                reservation.setLastName(user.getLastName());
+                reservation.setEmail(user.getEmail());
+                reservation.setPhone(String.valueOf(user.getPhone()));
+            }
         }
 
         model.addAttribute("reservation", reservation);
@@ -53,9 +72,21 @@ public class ReservationController {
     }
 
     @PostMapping("/reservationForm")
-    public String processReservationForm(@ModelAttribute("reservation") @Valid Reservation reservation, BindingResult result, Principal principal, Model model) {
+    public String processReservationForm(@ModelAttribute("reservation") @Valid Reservation reservation, BindingResult result, @AuthenticationPrincipal UserDetails currentUser, Model model) {
         if (result.hasErrors()) {
             return "home-page/reservationForm";
+        }
+        User user = null;
+        if (currentUser != null) {
+            user = userService.findByEmail(currentUser.getUsername());
+        }
+
+
+        if (reservation.getId() != 0) {
+            Optional<Reservation> optionalReservation = reservationService.findById(reservation.getId());
+            if (optionalReservation.isEmpty() || optionalReservation.get().getClient().getId() != user.getId()) {
+                return "redirect:/user/reservations";
+            }
         }
 
         LocalDate date = reservation.getDate();
@@ -108,11 +139,7 @@ public class ReservationController {
 
         reservation.setKayaks(selectedKayaks);
         reservation.setStatus("Oczekuje na potwierdzenie");
-
-        if (principal != null) {
-            User user = userService.findByEmail(principal.getName());
-            reservation.setClient(user);
-        }
+        reservation.setClient(user);
         reservation.setPrice(toPay);
 
         reservationService.save(reservation);
@@ -131,25 +158,6 @@ public class ReservationController {
         return "redirect:/user/reservations";
     }
 
-//    @GetMapping("/reservation/edit")
-//    public String editReservationDetails(Model model, Reservation reservation, @AuthenticationPrincipal UserDetails userDetails){
-//        User user = userService.findByEmail(userDetails.getUsername());
-//        //model.addAttribute("user", user);
-//            reservation.setFirstName(user.getFirstName());
-//            reservation.setLastName(user.getLastName());
-//            reservation.setEmail(user.getEmail());
-//            reservation.setPhone(String.valueOf(user.getPhone()));
-//
-//        long reservationId = reservation.getId();
-//        Optional<Reservation> rToEdit = reservationService.findReservationById(reservationId);
-//        model.addAttribute("reservation", rToEdit);
-//        return "home-page/reservationForm";
-//    }
-//    @PostMapping("/reservation/edit")
-//    public String editReservationDetails(@ModelAttribute Reservation reservation, @AuthenticationPrincipal UserDetails userDetails){
-//        //userService.update(user, userDetails);
-//        return "redirect:/user/home";
-//    }
 
     @GetMapping("/reservationConfirmation")
     public String showReservationConfirmation() {

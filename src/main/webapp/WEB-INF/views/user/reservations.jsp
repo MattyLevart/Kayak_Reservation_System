@@ -28,7 +28,7 @@
             <td>${reservation.price} PLN</td>
             <td>
                 <a href="${pageContext.request.contextPath}/reservation/details" class="btn btn-info btn-sm">Szczegóły</a>
-<%--                <a href="${pageContext.request.contextPath}/reservation/cancel" class="btn btn-danger btn-sm">Odwołaj</a>--%>
+                <a href="${pageContext.request.contextPath}/reservationForm?id=${reservation.id}" class="btn btn-warning btn-sm">Edytuj</a>
                 <form:form action="${pageContext.request.contextPath}/reservation/cancel" method="post" style="display:inline;">
                     <input type="hidden" name="reservationId" value="${reservation.id}">
                     <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
