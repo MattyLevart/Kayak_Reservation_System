@@ -58,6 +58,9 @@
             <form:input id="babySeats" path="babySeats" type="number" min="0" class="form-control" value="0"/>
             <form:errors path="babySeats" cssClass="text-danger"/>
         </div>
+        <div>
+            <form:hidden path="price"></form:hidden>
+        </div>
         <c:if test="${empty principal}">
             <div class="form-group">
                 <label for="firstName">Imię:</label>

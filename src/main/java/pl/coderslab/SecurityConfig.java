@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/user/home", true)
+                .defaultSuccessUrl("/user/reservations", true)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")

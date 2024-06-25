@@ -96,7 +96,7 @@ Wrapper -->
   >
     <c:choose>
       <c:when test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/home">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/user/reservations">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-anchor"></i>
           </div>
