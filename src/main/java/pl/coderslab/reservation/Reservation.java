@@ -56,5 +56,7 @@ public class Reservation {
     @NotEmpty(message = "Numer telefonu nie może być pusty")
     @Size(min = 9, max = 15, message = "Numer telefonu musi zawierać od 9 do 15 znaków")
     private String phone;
+    @Min(value = 0)
+    private int price;
 
 }

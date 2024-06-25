@@ -1,6 +1,5 @@
 package pl.coderslab.reservation;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,9 +7,8 @@ import org.springframework.stereotype.Repository;
 import pl.coderslab.kayak.Kayak;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
@@ -27,9 +25,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findReservationsByDate(@Param("date") LocalDate date);
 
     @Query("SELECT r FROM Reservation r where r.date > now() and r.client.id = :clientId")
-    List<Reservation> findNextTreeUserReservations(@Param("clientId") Long clientId);
-
-
+    List<Reservation> findFutureUserReservations(@Param("clientId") Long clientId);
 
 
 }

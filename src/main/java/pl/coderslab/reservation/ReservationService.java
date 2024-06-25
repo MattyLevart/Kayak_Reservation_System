@@ -1,7 +1,5 @@
 package pl.coderslab.reservation;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import pl.coderslab.kayak.Kayak;
@@ -9,14 +7,10 @@ import pl.coderslab.kayak.KayakRepository;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserRepository;
 
-import java.awt.print.Pageable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.apache.logging.log4j.ThreadContext.removeAll;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -55,9 +49,11 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public List<Reservation> findNextTreeReservations(UserDetails userDetails) {
+    public List<Reservation> findFutureReservations(UserDetails userDetails) {
         String userMail = userDetails.getUsername();
         User byEmail = userRepository.findByEmail(userMail);
-        return reservationRepository.findNextTreeUserReservations(byEmail.getId());
+        return reservationRepository.findFutureUserReservations(byEmail.getId());
     }
+
+
 }

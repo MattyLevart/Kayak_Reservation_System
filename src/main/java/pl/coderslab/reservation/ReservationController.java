@@ -1,6 +1,8 @@
 package pl.coderslab.reservation;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ReservationController {
@@ -54,18 +57,15 @@ public class ReservationController {
             return "home-page/reservationForm";
         }
 
-
         LocalDate date = reservation.getDate();
         int hour = reservation.getHour();
-        LocalDateTime dateTime = date.atTime(hour, 0);
 
         List<Kayak> availableKayaks = reservationService.findAvailableKayaks(date);
 
         int singleKayaks = reservation.getSingleKayaks();
         int doubleKayaks = reservation.getDoubleKayaks();
         int babySeats = reservation.getBabySeats();
-        String placeOfStart = reservation.getPlaceOfStart();
-
+        int toPay = 0;
 
         List<Kayak> selectedKayaks = new ArrayList<>();
         int requiredBabyKayaks = babySeats;
@@ -75,6 +75,7 @@ public class ReservationController {
             if (singleKayaks > 0 && kayak.getPlaces() == 1) {
                 selectedKayaks.add(kayak);
                 singleKayaks--;
+                toPay += 50;
             }
             if (singleKayaks == 0) break;
         }
@@ -83,6 +84,7 @@ public class ReservationController {
             if (doubleKayaks > 0 && kayak.getPlaces() == 2) {
                 selectedKayaks.add(kayak);
                 doubleKayaks--;
+                toPay += 100;
             }
             if (doubleKayaks == 0) break;
         }
@@ -91,6 +93,7 @@ public class ReservationController {
             if (requiredBabyKayaks > 0 && kayak.isBabyOption()) {
                 selectedKayaks.add(kayak);
                 requiredBabyKayaks--;
+                toPay += 100;
             }
             if (requiredBabyKayaks == 0) break;
         }
@@ -103,18 +106,39 @@ public class ReservationController {
         }
 
         reservation.setKayaks(selectedKayaks);
-        reservation.setStatus("in progress");
-
+        reservation.setStatus("Oczekuje na potwierdzenie");
 
         if (principal != null) {
             User user = userService.findByEmail(principal.getName());
             reservation.setClient(user);
         }
+        reservation.setPrice(toPay);
 
         reservationService.save(reservation);
 
         return "redirect:/reservationConfirmation";
     }
+
+//    @GetMapping("/reservation/edit")
+//    public String editReservationDetails(Model model, Reservation reservation, @AuthenticationPrincipal UserDetails userDetails){
+//        User user = userService.findByEmail(userDetails.getUsername());
+//        //model.addAttribute("user", user);
+//            reservation.setFirstName(user.getFirstName());
+//            reservation.setLastName(user.getLastName());
+//            reservation.setEmail(user.getEmail());
+//            reservation.setPhone(String.valueOf(user.getPhone()));
+//
+//        long reservationId = reservation.getId();
+//        Optional<Reservation> rToEdit = reservationService.findReservationById(reservationId);
+//        model.addAttribute("reservation", rToEdit);
+//        return "home-page/reservationForm";
+//    }
+//    @PostMapping("/reservation/edit")
+//    public String editReservationDetails(@ModelAttribute Reservation reservation, @AuthenticationPrincipal UserDetails userDetails){
+//        //userService.update(user, userDetails);
+//        return "redirect:/user/home";
+//    }
+
     @GetMapping("/reservationConfirmation")
     public String showReservationConfirmation() {
         return "home-page/confirmation";

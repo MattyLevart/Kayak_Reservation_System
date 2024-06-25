@@ -32,14 +32,13 @@ public class UserController {
         this.userSecService = userSecService;
         this.reservationService = reservationService;
     }
-    @GetMapping("/home")
-    public String showList(Model model, Principal principal, @AuthenticationPrincipal UserDetails userDetails){
-        List<Reservation> nextReservations = reservationService.findNextTreeReservations(userDetails);
-        String username = principal.getName();
-        User user = userService.findByEmail(username);
+    @GetMapping("/reservations")
+    public String showList(Model model, @AuthenticationPrincipal UserDetails userDetails){
+        List<Reservation> nextReservations = reservationService.findFutureReservations(userDetails);
+        User user = userService.findByEmail(userDetails.getUsername());
         model.addAttribute("user", user);
         model.addAttribute("reservs", nextReservations);
-        return "user/home";
+        return "user/reservations";
     }
     @GetMapping("/details")
     public String showUserDetails(Model model, Principal principal){
@@ -47,14 +46,6 @@ public class UserController {
         User user = userService.findByEmail(username);
         model.addAttribute("user", user);
         return "user/list";
-    }
-
-    @GetMapping("/reservations")
-    public String showUserReservations(Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userService.findByEmail(username);
-        model.addAttribute("reservations", user.getReservations());
-        return "user/reservations";
     }
 
     @GetMapping("/edit")
