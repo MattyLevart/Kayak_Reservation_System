@@ -55,5 +55,8 @@ public class ReservationService {
         return reservationRepository.findFutureUserReservations(byEmail.getId());
     }
 
+    public Optional<Reservation> findById(Long id) {
+        return reservationRepository.findById(id);
+    }
 
 }
