@@ -5,7 +5,12 @@
 <html>
 <%@include file="/header.jsp" %>
 <div class="container">
-    <h2>Formularz rezerwacji</h2>
+    <h2>
+        <c:choose>
+            <c:when test="${reservation.id == 0}">Nowa rezerwacja</c:when>
+            <c:otherwise>Edytuj rezerwację</c:otherwise>
+        </c:choose>
+    </h2>
     <c:if test="${not empty error}">
         <div class="alert alert-danger">
             <p>${error}</p>
@@ -13,7 +18,7 @@
     </c:if>
 
     <form:form modelAttribute="reservation" method="post" class="form-horizontal">
-
+        <form:hidden path="id"/>
         <div class="form-group">
             <label for="date">Data:</label>
             <form:input path="date" type="date" class="form-control"/>
@@ -83,9 +88,12 @@
                 <form:errors path="phone" cssClass="text-danger"/>
             </div>
         </c:if>
-        <div class="form-group">
-            <input type="submit" value="Zarezerwuj" class="btn btn-primary"/>
-        </div>
+        <button type="submit" class="btn btn-primary">
+            <c:choose>
+                <c:when test="${reservation.id == 0}">Zarezerwuj</c:when>
+                <c:otherwise>Zapisz zmiany</c:otherwise>
+            </c:choose>
+        </button>
     </form:form>
 </div>
 <%@include file="/footer.jsp" %>
