@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%@include file="/header.jsp" %>
@@ -27,10 +28,12 @@
             <td>${reservation.price} PLN</td>
             <td>
                 <a href="${pageContext.request.contextPath}/reservation/details" class="btn btn-info btn-sm">Szczegóły</a>
-                <a href="${pageContext.request.contextPath}/reservation/cancel" class="btn btn-danger btn-sm">Odwołaj</a>
+<%--                <a href="${pageContext.request.contextPath}/reservation/cancel" class="btn btn-danger btn-sm">Odwołaj</a>--%>
+                <form:form action="${pageContext.request.contextPath}/reservation/cancel" method="post" style="display:inline;">
+                    <input type="hidden" name="reservationId" value="${reservation.id}">
+                    <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
+                </form:form>
             </td>
-
-
         </tr>
         </c:forEach>
     </table>
