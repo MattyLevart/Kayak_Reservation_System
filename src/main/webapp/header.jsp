@@ -131,9 +131,9 @@ Wrapper -->
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/user/history">
+        <a class="nav-link" href="/user/points-history">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Historia rezerwacji i punkty</span>
+          <span>Historia punktów</span>
         </a>
       </li>
       <li class="nav-item active text-center">

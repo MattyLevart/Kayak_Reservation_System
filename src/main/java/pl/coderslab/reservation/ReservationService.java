@@ -6,6 +6,7 @@ import pl.coderslab.kayak.Kayak;
 import pl.coderslab.kayak.KayakRepository;
 import pl.coderslab.user.User;
 import pl.coderslab.user.UserRepository;
+import pl.coderslab.user.UserService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,11 +18,13 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final KayakRepository kayakRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
-    public ReservationService(ReservationRepository reservationRepository, KayakRepository kayakRepository, UserRepository userRepository) {
+    public ReservationService(ReservationRepository reservationRepository, KayakRepository kayakRepository, UserRepository userRepository, UserService userService) {
         this.reservationRepository = reservationRepository;
         this.kayakRepository = kayakRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     public List<Kayak> findUnavailableKayaks(LocalDate date, int hour) {
@@ -57,6 +60,37 @@ public class ReservationService {
 
     public Optional<Reservation> findById(Long id) {
         return reservationRepository.findById(id);
+    }
+
+    public void updateReservationStatus(Long reservationId, String status) {
+        Optional<Reservation> optionalReservation = findById(reservationId);
+        if (optionalReservation.isPresent()) {
+            Reservation reservation = optionalReservation.get();
+            reservation.setStatus(status);
+
+            if ("Zakończona".equals(status)) {
+                int points = calculatePoints(reservation);
+                reservation.setPoints(points);
+                User user = reservation.getClient();
+                userService.addPoints(user, points);
+            }
+
+            reservationRepository.save(reservation);
+        }
+    }
+
+    private int calculatePoints(Reservation reservation){
+        int points = 0;
+        for (Kayak kayak : reservation.getKayaks()){
+            if (kayak.getPlaces() == 1){
+                points += 1;
+            }else if (kayak.getPlaces() == 2){
+                points += 2;
+            }
+//            if (kayak.isBabyOption()){
+//                points += 2;
+//            }
+        } return points;
     }
 
 }

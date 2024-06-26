@@ -58,5 +58,6 @@ public class Reservation {
     private String phone;
     @Min(value = 0)
     private int price;
+    private int points;
 
 }

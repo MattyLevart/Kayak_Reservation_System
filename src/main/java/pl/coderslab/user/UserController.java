@@ -5,15 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.pointsHistory.PointsHistory;
 import pl.coderslab.reservation.Reservation;
 import pl.coderslab.reservation.ReservationService;
-import pl.coderslab.role.Role;
 
-import java.awt.print.Book;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -58,7 +55,7 @@ public class UserController {
     @PostMapping("/edit")
     public String editUser(@ModelAttribute User user, @AuthenticationPrincipal UserDetails userDetails){
         userService.update(user, userDetails);
-        return "redirect:/user/home";
+        return "redirect:/user/reservations";
     }
     @RequestMapping("/delete")
     public String deleteUserAccount(Principal principal){
@@ -66,28 +63,15 @@ public class UserController {
         userService.deleteByEmail(username);
         return "redirect:/";
     }
-
-//    @GetMapping("/register")
-//    public String showRegistrationForm(Model model) {
-//        model.addAttribute("user", new User());
-//        return "home-page/register";
-//    }
-//    @PostMapping("/register")
-//    public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            return "home-page/register";
-//        }
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//
-//        Role userRole = new Role();
-//        userRole.setName("ROLE_USER");
-//        user.setRoles(Collections.singleton(userRole));
-//
-//        userService.save(user);
-//
-//        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
-//        return "redirect:/login";
-//    }
+@GetMapping("/points-history")
+    public String viewPointHistory(@AuthenticationPrincipal UserDetails currentUser, Model model){
+        if (currentUser != null){
+            User user = userService.findByEmail(currentUser.getUsername());
+            List<PointsHistory> pointsHistories = userService.getPointsHistory(user);
+            model.addAttribute("pointsHistories", pointsHistories);
+        }
+        return "user/points-history";
+    }
 
 }
 

@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.coderslab.pointsHistory.PointsHistory;
 import pl.coderslab.reservation.Reservation;
 import pl.coderslab.role.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,4 +44,6 @@ public class User {
     private List<Reservation> reservations;
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<Role> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PointsHistory> pointsHistories = new ArrayList<>();
 }
