@@ -155,6 +155,12 @@ Wrapper -->
             <span>Użytkownicy</span>
           </a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin/kayaks">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Kajaki</span>
+          </a>
+        </li>
       </sec:authorize>
 
       <li class="nav-item active text-center">
