@@ -73,9 +73,9 @@ public class AdminController {
         return "redirect:/admin/reservations";
     }
 
-    @GetMapping("/kayaks")
-    public String showKayaksList(Model model){
-        model.addAttribute("kayaks", kayakRepository.findAll());
-        return "admin/kayaks";
-    }
+//    @GetMapping("/kayaks")
+//    public String showKayaksList(Model model){
+//        model.addAttribute("kayaks", kayakRepository.findAll());
+//        return "admin/kayaks";
+//    }
 }
