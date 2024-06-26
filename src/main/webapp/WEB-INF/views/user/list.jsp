@@ -3,9 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%@include file="/header.jsp" %>
-<div class="d-flex justify-content-between align-items-center">
+<div class="container">
 <h1>Twoje Dane:</h1>
-</div>
 
 <table class="table">
     <tr>
@@ -29,7 +28,7 @@
         <td>${user.points}</td>
     </tr>
 </table>
-
+</div>
 <div class="text-center">
     <a href="/user/edit" class="btn btn-warning">Edytuj Dane Konta</a>
     <a href="/user/delete" class="btn btn-danger">Usuń Konto</a>
