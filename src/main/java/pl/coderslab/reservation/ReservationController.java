@@ -157,7 +157,11 @@ public class ReservationController {
         }
         return "redirect:/user/reservations";
     }
-
+    @PostMapping("/admin/reservation/updateStatus")
+    public String updateReservationStatus(@RequestParam("reservationId") Long id, @RequestParam("status") String status) {
+        reservationService.updateReservationStatus(id, status);
+        return "redirect:/admin/reservations";
+    }
 
     @GetMapping("/reservationConfirmation")
     public String showReservationConfirmation() {

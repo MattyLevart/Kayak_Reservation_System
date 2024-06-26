@@ -18,6 +18,7 @@
             <th>Miejsce startu</th>
             <th>Status rezerwacji</th>
             <th>Do zapłaty</th>
+            <th>Punkty</th>
         </tr>
             <c:forEach var="reservation" items="${reservs}">
         <tr>
@@ -26,6 +27,16 @@
             <td>${reservation.placeOfStart}</td>
             <td>${reservation.status}</td>
             <td>${reservation.price} PLN</td>
+            <td>
+                <c:choose>
+                    <c:when test="${reservation.status == 'Oczekuje na potwierdzenie' || reservation.status == 'Potwierdzona'}">
+                        ${reservation.points} (dodane po zakończonym spływie)
+                    </c:when>
+                    <c:otherwise>
+                        ${reservation.points}
+                    </c:otherwise>
+                </c:choose>
+            </td>
             <td>
                 <a href="${pageContext.request.contextPath}/reservation/details" class="btn btn-info btn-sm">Szczegóły</a>
                 <a href="${pageContext.request.contextPath}/reservationForm?id=${reservation.id}" class="btn btn-warning btn-sm">Edytuj</a>
