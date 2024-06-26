@@ -28,6 +28,12 @@
     .bg-gradient-orange {
       background: linear-gradient(180deg, #f86e1b, #fc934e);
     }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
     .login-form {
       width: 100%;
       max-width: 400px;
@@ -136,6 +142,21 @@ Wrapper -->
           <span>Historia punktów</span>
         </a>
       </li>
+      <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin/reservations">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Wszystkie Rezerwacje</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin/users">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Użytkownicy</span>
+          </a>
+        </li>
+      </sec:authorize>
+
       <li class="nav-item active text-center">
         <sec:authorize access="isAuthenticated()">
           <form action="<c:url value="/logout"/>" method="post">

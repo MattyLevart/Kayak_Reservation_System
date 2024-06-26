@@ -27,12 +27,10 @@ import java.util.Optional;
 @Controller
 public class ReservationController {
     private final UserService userService;
-    private final KayakService kayakService;
     private final ReservationService reservationService;
 
-    public ReservationController(UserService userService, KayakService kayakService, ReservationService reservationService) {
+    public ReservationController(UserService userService, ReservationService reservationService) {
         this.userService = userService;
-        this.kayakService = kayakService;
         this.reservationService = reservationService;
     }
 
@@ -98,6 +96,7 @@ public class ReservationController {
         int doubleKayaks = reservation.getDoubleKayaks();
         int babySeats = reservation.getBabySeats();
         int toPay = 0;
+        int points = 0;
 
         List<Kayak> selectedKayaks = new ArrayList<>();
         int requiredBabyKayaks = babySeats;
@@ -108,6 +107,7 @@ public class ReservationController {
                 selectedKayaks.add(kayak);
                 singleKayaks--;
                 toPay += 50;
+                points += 1;
             }
             if (singleKayaks == 0) break;
         }
@@ -117,6 +117,7 @@ public class ReservationController {
                 selectedKayaks.add(kayak);
                 doubleKayaks--;
                 toPay += 100;
+                points += 2;
             }
             if (doubleKayaks == 0) break;
         }
@@ -126,6 +127,7 @@ public class ReservationController {
                 selectedKayaks.add(kayak);
                 requiredBabyKayaks--;
                 toPay += 100;
+                points += 2;
             }
             if (requiredBabyKayaks == 0) break;
         }
@@ -141,6 +143,7 @@ public class ReservationController {
         reservation.setStatus("Oczekuje na potwierdzenie");
         reservation.setClient(user);
         reservation.setPrice(toPay);
+        reservation.setPoints(points);
 
         reservationService.save(reservation);
 
@@ -154,6 +157,17 @@ public class ReservationController {
             Reservation reservation = optionalReservation.get();
             reservation.setStatus("Odwołana");
             reservationService.save(reservation);
+        }
+        return "redirect:/user/reservations";
+    }
+
+    @GetMapping("/reservation/details")
+    public String getReservationDetails(@RequestParam(value = "id") Long id, Model model) {
+        Optional<Reservation> optionalReservation = reservationService.findById(id);
+        if (optionalReservation.isPresent()) {
+            Reservation reservation = optionalReservation.get();
+            model.addAttribute("reservation", reservation);
+            return "user/reservationDetails";
         }
         return "redirect:/user/reservations";
     }
