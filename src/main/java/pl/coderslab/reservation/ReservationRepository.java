@@ -30,5 +30,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query("SELECT r from Reservation r where r.client.id = :clientId ORDER BY r.date")
     List<Reservation> findAllUserReservationsSortedByDate(@Param("clientId") Long clientId);
 
+    List<Reservation> findByStatusOrderByDateAsc(String status);
+
 
 }

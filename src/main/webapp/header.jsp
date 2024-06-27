@@ -124,6 +124,7 @@ Wrapper -->
 
     <!-- Nav Item - Dashboard -->
     <c:if test="${sessionScope.SPRING_SECURITY_CONTEXT != null}">
+      <p class="nav-link" style="text-align: center; color: #f0f0f0; margin-top: 20px; margin-bottom: 5px;">Panel użytkownika:</p>
       <li class="nav-item active">
         <a class="nav-link" href="/user/reservations">
           <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -143,10 +144,17 @@ Wrapper -->
         </a>
       </li>
       <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <p class="nav-link" style="text-align: center; color: #f0f0f0; margin-top: 20px; margin-bottom: 5px;">Panel administratora:</p>
         <li class="nav-item active">
           <a class="nav-link" href="/admin/reservations">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Wszystkie Rezerwacje</span>
+            <span>Nadchodzące Rezerwacje</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin/archive">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Archiwum Rezerwacji</span>
           </a>
         </li>
         <li class="nav-item active">

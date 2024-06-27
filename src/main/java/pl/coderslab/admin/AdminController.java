@@ -5,10 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.kayak.KayakRepository;
 import pl.coderslab.pointsHistory.PointsHistory;
+import pl.coderslab.reservation.Reservation;
 import pl.coderslab.reservation.ReservationRepository;
 import pl.coderslab.reservation.ReservationService;
 import pl.coderslab.user.User;
-import pl.coderslab.user.UserRepository;
 import pl.coderslab.user.UserService;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 @GetMapping("/points-history")
-    public String viewPointsHistory(@PathVariable Long userId, Model model){
+    public String viewPointsHistory(@RequestParam("userId") Long userId, Model model){
         Optional<User> optionalUser = userService.findById(userId);
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
@@ -63,8 +63,20 @@ public class AdminController {
     }
     @GetMapping("/reservations")
     public String showReservationList(Model model){
-        model.addAttribute("reservations", reservationRepository.findAll());
+        List<Reservation> waitingReservations = reservationRepository.findByStatusOrderByDateAsc("Oczekuje na potwierdzenie");
+        List<Reservation> confirmedReservations = reservationRepository.findByStatusOrderByDateAsc("Potwierdzona");
+        model.addAttribute("waitingReservations", waitingReservations);
+        model.addAttribute("confirmedReservations", confirmedReservations);
         return "admin/reservations";
+    }
+
+    @GetMapping("/archive")
+    public String showArchive(Model model) {
+        List<Reservation> finishedReservations = reservationRepository.findByStatusOrderByDateAsc("Zakończona");
+        List<Reservation> cancelledReservations = reservationRepository.findByStatusOrderByDateAsc("Odwołana");
+        model.addAttribute("completedReservations", finishedReservations);
+        model.addAttribute("cancelledReservations", cancelledReservations);
+        return "admin/archive";
     }
 
     @PostMapping("/reservation/updateStatus")
@@ -83,6 +95,24 @@ public class AdminController {
     public String completeReservation(@RequestParam("reservationId") Long reservationId) {
         reservationService.updateReservationStatus(reservationId, "Zakończona");
         return "redirect:/admin/reservations";
+    }
+
+    @PostMapping("/reservation/cancel")
+    public String cancelReservation(@RequestParam("reservationId") Long id) {
+        reservationService.updateReservationStatus(id, "Odwołana");
+        return "redirect:/admin/reservations";
+    }
+    @GetMapping("/reservation/details")
+    public String showReservationDetails(@RequestParam("id") Long id, Model model) {
+        Optional<Reservation> optionalReservation = reservationRepository.findById(id);
+        if (optionalReservation.isPresent()) {
+            Reservation reservation = optionalReservation.get();
+            model.addAttribute("reservation", reservation);
+            model.addAttribute("user", reservation.getClient());
+            return "admin/reservationDetails";
+        } else {
+            return "redirect:/admin/reservations";
+        }
     }
 
 //    @GetMapping("/kayaks")
