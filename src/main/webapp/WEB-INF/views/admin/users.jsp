@@ -6,7 +6,6 @@
 <%@include file="/header.jsp" %>
 <div class="d-flex justify-content-between align-items-center">
     <h1>Lista użytkowników:</h1>
-    <a href="/user/add" class="btn btn-primary">Dodaj użytkownika</a>
 </div>
 
 <table class="table">
@@ -35,7 +34,7 @@
                     <input type="number" name="points" placeholder="Punkty">
                     <button type="submit" class="btn btn-primary btn-sm">Zaktualizuj punkty</button>
                 </form:form>
-                <a href="${pageContext.request.contextPath}/admin/users/${user.id}/points-history" class="btn btn-info btn-sm">Historia punktów</a>
+                <a href="${pageContext.request.contextPath}/admin/points-history?userId=${user.id}" class="btn btn-info btn-sm">Historia punktów</a>
             </td>
         </tr>
     </c:forEach>
