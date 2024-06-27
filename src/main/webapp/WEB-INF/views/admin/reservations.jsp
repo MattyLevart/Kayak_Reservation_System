@@ -30,16 +30,16 @@
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-primary btn-sm">Potwierdź</button>
                     </form:form>
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post" style="display:inline;">
+                        <input type="hidden" name="reservationId" value="${reservation.id}">
+                        <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
+                    </form:form>
 
 <%--                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post" style="display:inline;">--%>
 <%--                        <input type="hidden" name="reservationId" value="${reservation.id}">--%>
 <%--                        <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>--%>
 <%--                    </form:form>--%>
 
-                    <form:form action="${pageContext.request.contextPath}/admin/reservation/complete" method="post" style="display:inline;">
-                        <input type="hidden" name="reservationId" value="${reservation.id}">
-                        <button type="submit" class="btn btn-success btn-sm">Zakończ</button>
-                    </form:form>
                 </td>
             </tr>
         </c:forEach>
@@ -66,11 +66,14 @@
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
                     </form:form>
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/complete" method="post" style="display:inline;">
+                        <input type="hidden" name="reservationId" value="${reservation.id}">
+                        <button type="submit" class="btn btn-success btn-sm">Zakończ</button>
+                    </form:form>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <a href="${pageContext.request.contextPath}/admin/home" class="btn btn-primary">Powrót do panelu admina</a>
 </div>
 <%@include file="/footer.jsp" %>
 </html>

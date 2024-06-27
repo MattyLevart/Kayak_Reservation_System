@@ -101,6 +101,11 @@ public class ReservationController {
         List<Kayak> selectedKayaks = new ArrayList<>();
         int requiredBabyKayaks = babySeats;
 
+        if (singleKayaks + doubleKayaks + requiredBabyKayaks == 0){
+            model.addAttribute("error", "Nie wybrano żadnego kajaka. Proszę wybrać co najmniej jeden kajak.");
+            return "home-page/reservationForm";
+        }
+
 
         for (Kayak kayak : availableKayaks) {
             if (singleKayaks > 0 && kayak.getPlaces() == 1) {
@@ -131,6 +136,7 @@ public class ReservationController {
             }
             if (requiredBabyKayaks == 0) break;
         }
+
 
         if (singleKayaks > 0 || doubleKayaks > 0 || requiredBabyKayaks > 0) {
             model.addAttribute("error", "Brak wystarczającej liczby dostępnych kajaków na wybrany termin.\n" +

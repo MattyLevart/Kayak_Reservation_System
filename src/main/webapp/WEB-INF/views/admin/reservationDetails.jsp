@@ -59,6 +59,11 @@
             </c:when>
             <c:otherwise>
                 <tr>
+                    <td colspan="2" style="background-color: yellow; text-align: center;">
+                        Rezerwacja, założona przez użytkownika bez konta
+                    </td>
+                </tr>
+                <tr>
                     <th>Imię:</th>
                     <td>${reservation.firstName}</td>
                 </tr>
