@@ -21,6 +21,11 @@
                 <td>${reservation.placeOfStart}</td>
                 <td>${reservation.status}</td>
                 <td>
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/confirm" method="post" style="display:inline;">
+                        <input type="hidden" name="reservationId" value="${reservation.id}">
+                        <button type="submit" class="btn btn-primary btn-sm">Potwierdź</button>
+                    </form:form>
+
                     <form:form action="${pageContext.request.contextPath}/admin/reservation/complete" method="post" style="display:inline;">
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-success btn-sm">Zakończ</button>

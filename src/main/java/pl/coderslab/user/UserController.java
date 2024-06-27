@@ -31,10 +31,10 @@ public class UserController {
     }
     @GetMapping("/reservations")
     public String showList(Model model, @AuthenticationPrincipal UserDetails userDetails){
-        List<Reservation> nextReservations = reservationService.findFutureReservations(userDetails);
+        List<Reservation> reservations = reservationService.getAllUserReservationsSortedByDate(userDetails);
         User user = userService.findByEmail(userDetails.getUsername());
         model.addAttribute("user", user);
-        model.addAttribute("reservs", nextReservations);
+        model.addAttribute("reservs", reservations);
         return "user/reservations";
     }
     @GetMapping("/details")

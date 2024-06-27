@@ -52,10 +52,16 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-    public List<Reservation> findFutureReservations(UserDetails userDetails) {
+//    public List<Reservation> findFutureReservations(UserDetails userDetails) {
+//        String userMail = userDetails.getUsername();
+//        User byEmail = userRepository.findByEmail(userMail);
+//        return reservationRepository.findFutureUserReservations(byEmail.getId());
+//    }
+
+    public List<Reservation> getAllUserReservationsSortedByDate(UserDetails userDetails){
         String userMail = userDetails.getUsername();
-        User byEmail = userRepository.findByEmail(userMail);
-        return reservationRepository.findFutureUserReservations(byEmail.getId());
+        User byMail = userRepository.findByEmail(userMail);
+        return reservationRepository.findAllUserReservationsSortedByDate(byMail.getId());
     }
 
     public Optional<Reservation> findById(Long id) {
@@ -69,10 +75,12 @@ public class ReservationService {
             reservation.setStatus(status);
 
             if ("Zakończona".equals(status)) {
-                int points = calculatePoints(reservation);
-                reservation.setPoints(points);
                 User user = reservation.getClient();
-                userService.addPoints(user, points);
+                if (user != null) {
+                    int points = calculatePoints(reservation);
+                    reservation.setPoints(points);
+                    userService.addPoints(user, points);
+                }
             }
 
             reservationRepository.save(reservation);

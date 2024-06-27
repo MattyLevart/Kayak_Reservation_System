@@ -67,6 +67,18 @@ public class AdminController {
         return "admin/reservations";
     }
 
+    @PostMapping("/reservation/updateStatus")
+    public String updateReservationStatus(@RequestParam("reservationId") Long id, @RequestParam("status") String status) {
+        reservationService.updateReservationStatus(id, status);
+        return "redirect:/admin/reservations";
+    }
+
+    @PostMapping("/reservation/confirm")
+    public String confirmReservation(@RequestParam("reservationId") Long id) {
+        reservationService.updateReservationStatus(id, "Potwierdzona");
+        return "redirect:/admin/reservations";
+    }
+
     @PostMapping("/reservation/complete")
     public String completeReservation(@RequestParam("reservationId") Long reservationId) {
         reservationService.updateReservationStatus(reservationId, "Zakończona");
