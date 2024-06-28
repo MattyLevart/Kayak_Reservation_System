@@ -2,6 +2,8 @@ package pl.coderslab.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long> {
 
     void delete(User user);
@@ -9,11 +11,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Override
     void deleteById(Long userId);
 
-    void deleteByEmail(String email);
 
     User findByEmail(String email);
 
-    boolean existsByEmail(String email);
+    Optional<User> findUserByEmail(String email);
+
 
 }
 

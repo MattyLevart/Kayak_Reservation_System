@@ -34,6 +34,7 @@ public class User {
     private String lastName;
     @NotBlank(message = "Email nie może być pusty")
     @Email(message = "Wpisz prawidłowy email")
+    @Column(unique = true)
     private String email;
     @NotNull(message = "Numer telefonu nie może być pusty")
     @Digits(integer = 15, fraction = 0, message = "Wpisz prawidłowy numer")

@@ -27,10 +27,6 @@ public class ReservationService {
         this.userService = userService;
     }
 
-    public List<Kayak> findUnavailableKayaks(LocalDate date, int hour) {
-        return reservationRepository.findUnavailableKayaks(date, hour);
-    }
-
     public List<Kayak> findAvailableKayaks(LocalDate date) {
         List<Reservation> reservations = reservationRepository.findReservationsByDate(date);
 
@@ -52,13 +48,7 @@ public class ReservationService {
         reservationRepository.save(reservation);
     }
 
-//    public List<Reservation> findFutureReservations(UserDetails userDetails) {
-//        String userMail = userDetails.getUsername();
-//        User byEmail = userRepository.findByEmail(userMail);
-//        return reservationRepository.findFutureUserReservations(byEmail.getId());
-//    }
-
-    public List<Reservation> getAllUserReservationsSortedByDate(UserDetails userDetails){
+    public List<Reservation> getAllUserReservationsSortedByDate(UserDetails userDetails) {
         String userMail = userDetails.getUsername();
         User byMail = userRepository.findByEmail(userMail);
         return reservationRepository.findAllUserReservationsSortedByDate(byMail.getId());
@@ -87,18 +77,16 @@ public class ReservationService {
         }
     }
 
-    private int calculatePoints(Reservation reservation){
+    private int calculatePoints(Reservation reservation) {
         int points = 0;
-        for (Kayak kayak : reservation.getKayaks()){
-            if (kayak.getPlaces() == 1){
+        for (Kayak kayak : reservation.getKayaks()) {
+            if (kayak.getPlaces() == 1) {
                 points += 1;
-            }else if (kayak.getPlaces() == 2){
+            } else if (kayak.getPlaces() == 2) {
                 points += 2;
             }
-//            if (kayak.isBabyOption()){
-//                points += 2;
-//            }
-        } return points;
+        }
+        return points;
     }
 
 }

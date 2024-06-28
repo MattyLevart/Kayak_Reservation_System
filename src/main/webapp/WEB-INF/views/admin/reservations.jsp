@@ -24,21 +24,20 @@
                 <td>${reservation.placeOfStart}</td>
                 <td>${reservation.status}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/admin/reservation/details?id=${reservation.id}" class="btn btn-info btn-sm">Szczegóły</a>
-<%--                    <a href="${pageContext.request.contextPath}/admin/reservation/edit?id=${reservation.id}" class="btn btn-warning btn-sm">Edytuj</a>--%>
-                    <form:form action="${pageContext.request.contextPath}/admin/reservation/confirm" method="post" style="display:inline;">
+                    <a href="${pageContext.request.contextPath}/admin/reservation/details?id=${reservation.id}"
+                       class="btn btn-info btn-sm">Szczegóły</a>
+
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/confirm" method="post"
+                               style="display:inline;">
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-primary btn-sm">Potwierdź</button>
                     </form:form>
-                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post" style="display:inline;">
+
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post"
+                               style="display:inline;">
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
                     </form:form>
-
-<%--                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post" style="display:inline;">--%>
-<%--                        <input type="hidden" name="reservationId" value="${reservation.id}">--%>
-<%--                        <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>--%>
-<%--                    </form:form>--%>
 
                 </td>
             </tr>
@@ -61,12 +60,17 @@
                 <td>${reservation.placeOfStart}</td>
                 <td>${reservation.status}</td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/admin/reservation/details?id=${reservation.id}" class="btn btn-info btn-sm">Szczegóły</a>
-                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post" style="display:inline;">
+                    <a href="${pageContext.request.contextPath}/admin/reservation/details?id=${reservation.id}"
+                       class="btn btn-info btn-sm">Szczegóły</a>
+
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/cancel" method="post"
+                               style="display:inline;">
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-danger btn-sm">Odwołaj</button>
                     </form:form>
-                    <form:form action="${pageContext.request.contextPath}/admin/reservation/complete" method="post" style="display:inline;">
+
+                    <form:form action="${pageContext.request.contextPath}/admin/reservation/complete" method="post"
+                               style="display:inline;">
                         <input type="hidden" name="reservationId" value="${reservation.id}">
                         <button type="submit" class="btn btn-success btn-sm">Zakończ</button>
                     </form:form>

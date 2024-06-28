@@ -20,49 +20,48 @@ public class AdminController {
 
     private final UserService userService;
     private final ReservationRepository reservationRepository;
-    private final KayakRepository kayakRepository;
     private final ReservationService reservationService;
 
-    public AdminController(UserService userService, ReservationRepository reservationRepository, KayakRepository kayakRepository, ReservationService reservationService){
+    public AdminController(UserService userService, ReservationRepository reservationRepository, ReservationService reservationService) {
         this.userService = userService;
         this.reservationRepository = reservationRepository;
-        this.kayakRepository = kayakRepository;
         this.reservationService = reservationService;
     }
-    @GetMapping("/home")
-    public String showAdminHomePage(){
-        return "admin/home";
-    }
+
     @GetMapping("/users")
-    public String showUsersList(Model model){
+    public String showUsersList(Model model) {
         model.addAttribute("users", userService.findAll());
         return "admin/users";
     }
+
     @PostMapping("/users/points")
-    public String updateUserPoints(@RequestParam("userId") Long userId, @RequestParam("points") int points){
+    public String updateUserPoints(@RequestParam("userId") Long userId, @RequestParam("points") int points) {
         Optional<User> optionalUser = userService.findById(userId);
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (points >= 0){
-                userService.addPoints(user,points);
+            if (points >= 0) {
+                userService.addPoints(user, points);
             } else {
                 userService.minusPoints(user, -points);
             }
         }
         return "redirect:/admin/users";
     }
-@GetMapping("/points-history")
-    public String viewPointsHistory(@RequestParam("userId") Long userId, Model model){
+
+    @GetMapping("/points-history")
+    public String viewPointsHistory(@RequestParam("userId") Long userId, Model model) {
         Optional<User> optionalUser = userService.findById(userId);
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             List<PointsHistory> pointsHistories = userService.getPointsHistory(user);
             model.addAttribute("pointsHistories", pointsHistories);
+            model.addAttribute("user", user);
         }
         return "admin/points-history";
     }
+
     @GetMapping("/reservations")
-    public String showReservationList(Model model){
+    public String showReservationList(Model model) {
         List<Reservation> waitingReservations = reservationRepository.findByStatusOrderByDateAsc("Oczekuje na potwierdzenie");
         List<Reservation> confirmedReservations = reservationRepository.findByStatusOrderByDateAsc("Potwierdzona");
         model.addAttribute("waitingReservations", waitingReservations);
@@ -102,6 +101,7 @@ public class AdminController {
         reservationService.updateReservationStatus(id, "Odwołana");
         return "redirect:/admin/reservations";
     }
+
     @GetMapping("/reservation/details")
     public String showReservationDetails(@RequestParam("id") Long id, Model model) {
         Optional<Reservation> optionalReservation = reservationRepository.findById(id);
@@ -114,10 +114,4 @@ public class AdminController {
             return "redirect:/admin/reservations";
         }
     }
-
-//    @GetMapping("/kayaks")
-//    public String showKayaksList(Model model){
-//        model.addAttribute("kayaks", kayakRepository.findAll());
-//        return "admin/kayaks";
-//    }
 }
