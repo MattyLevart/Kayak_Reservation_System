@@ -5,7 +5,7 @@
 <%@include file="/header.jsp" %>
 <div class="d-flex justify-content-between align-items-center">
     <h1>Historia punktów</h1>
-<%--    <a href="/user/add" class="btn btn-primary">Dodaj użytkownika</a>--%>
+    <h3 class="text-right" style="color: #f86e1b">Aktualny stan konta: ${user.points} PKT</h3>
 </div>
 <table class="table">
     <tr>

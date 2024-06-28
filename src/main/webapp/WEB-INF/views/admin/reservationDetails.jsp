@@ -23,6 +23,18 @@
             <td>${reservation.placeOfStart}</td>
         </tr>
         <tr>
+            <th>Kajaki 2-osobowe:</th>
+            <td>${reservation.doubleKayaks}</td>
+        </tr>
+        <tr>
+            <th>Kajaki 1-osobowe:</th>
+            <td>${reservation.singleKayaks}</td>
+        </tr>
+        <tr>
+            <th>Kajaki z dostawką:</th>
+            <td>${reservation.babySeats}</td>
+        </tr>
+        <tr>
             <th>Status:</th>
             <td>${reservation.status}</td>
         </tr>
@@ -83,7 +95,8 @@
         </c:choose>
     </table>
 
-    <a href="${pageContext.request.contextPath}/admin/reservations" class="btn btn-primary">Powrót do listy rezerwacji</a>
+    <a href="${pageContext.request.contextPath}/admin/reservations" class="btn btn-primary">Powrót do listy
+        rezerwacji</a>
 </div>
 
 <%@include file="/footer.jsp" %>

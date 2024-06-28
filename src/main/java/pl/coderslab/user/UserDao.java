@@ -29,11 +29,4 @@ public class UserDao {
         entityManager.merge(user);
     }
 
-    public User findById(Long id) {
-        return entityManager.find(User.class, id);
-    }
-
-    public List<User> findAll() {
-        return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
-    }
 }

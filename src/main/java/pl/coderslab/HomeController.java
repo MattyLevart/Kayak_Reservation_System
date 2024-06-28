@@ -1,5 +1,6 @@
 package pl.coderslab;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,44 +21,43 @@ import java.util.Collections;
 
 @Controller
 public class HomeController {
-    private final UserSecService userSecService;
-    private final UserRepository userRepository;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final ReservationRepository reservationRepository;
 
-    public HomeController(UserRepository userRepository, UserService userService, BCryptPasswordEncoder passwordEncoder, UserSecService userSecService, ReservationRepository reservationRepository){
-        this.userRepository = userRepository;
+    public HomeController(UserService userService, BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.userSecService = userSecService;
-        this.reservationRepository = reservationRepository;
     }
 
     @GetMapping("/")
-    public String homePage() { return "/home-page/landing-page"; }
+    public String homePage() {
+        return "/home-page/landing-page";
+    }
 
 
     @GetMapping("/register")
-    public String showRegisterForm(Model model){
+    public String showRegisterForm(Model model) {
 
         model.addAttribute("user", new User());
         return "home-page/register";
     }
+
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model) {
+    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return "home-page/register";
         }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-//        Role userRole = new Role();
-//        userRole.setName("ROLE_USER");
-//        user.setRoles(Collections.singleton(userRole));
+        if (userService.emailExists(user.getEmail())) {
+            result.rejectValue("email", "error.user", "Podany email już istnieje");
+            return "home-page/register";
+        }
 
         userService.save(user);
-
-//        model.addAttribute("message", "Rejestracja przebiegła pomyślnie!");
         return "redirect:/login";
+
+
     }
 }

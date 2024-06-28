@@ -3,7 +3,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<%@include file="/header.jsp"%>
+<%@include file="/header.jsp" %>
 <div class="login-container">
     <form method="post" class="login-form">
         <h2 class="text-center">Zaloguj się</h2>
@@ -21,5 +21,5 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
     </form>
 </div>
-<%@include file="/footer.jsp"%>
+<%@include file="/footer.jsp" %>
 </html>

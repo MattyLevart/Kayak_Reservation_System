@@ -9,8 +9,8 @@
         <span>Zalogowany jako: ${user.firstName}</span>
     </div>
     <div class="header">
-    <h1>Witamy w systemie rezerwacji kajaków</h1>
-    <a href="${pageContext.request.contextPath}/reservationForm" class="btn btn-primary ml-3">Zarezerwuj kajak</a>
+        <h1>Witamy w systemie rezerwacji kajaków</h1>
+        <a href="${pageContext.request.contextPath}/reservationForm" class="btn btn-primary ml-3">Zarezerwuj kajak</a>
     </div>
     <h3 class="upcoming-trips mb-4">Twoje nadchodzące spływy kajakowe:</h3>
     <table class="table">

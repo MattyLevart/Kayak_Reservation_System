@@ -18,14 +18,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "WHERE (r.date = :date AND r.hour = :hour)")
     List<Kayak> findUnavailableKayaks(@Param("date") LocalDate date, @Param("hour") int hour);
 
-//    @Query("SELECT r FROM Reservation r WHERE r.date = :date AND r.hour = :hour")
-//    List<Reservation> findReservationsByDateAndHour(@Param("date") LocalDate date, @Param("hour") int hour);
-
     @Query("SELECT r FROM Reservation r WHERE r.date = :date")
     List<Reservation> findReservationsByDate(@Param("date") LocalDate date);
-
-//    @Query("SELECT r FROM Reservation r where r.date > now() and r.client.id = :clientId")
-//    List<Reservation> findFutureUserReservations(@Param("clientId") Long clientId);
 
     @Query("SELECT r from Reservation r where r.client.id = :clientId ORDER BY r.date")
     List<Reservation> findAllUserReservationsSortedByDate(@Param("clientId") Long clientId);

@@ -16,6 +16,7 @@
                 <div class="form-group">
                     <form:label path="places">Miejsca</form:label>
                     <form:input path="places" type="number" class="form-control"/>
+                    <form:errors cssClass="text-danger" path="places"/>
                 </div>
                 <div class="form-group">
                     <form:label path="babyOption">Opcja dla dzieci</form:label>
@@ -37,6 +38,7 @@
                 <div class="form-group">
                     <form:label path="places">Miejsca</form:label>
                     <form:input path="places" type="number" class="form-control"/>
+                    <form:errors cssClass="text-danger" path="places"/>
                 </div>
                 <div class="form-group">
                     <form:label path="babyOption">Opcja dla dzieci</form:label>

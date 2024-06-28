@@ -26,15 +26,16 @@
             <td>${user.email}</td>
             <td>${user.phone}</td>
             <td>${user.points}</td>
-<%--            <td><a href="/user/edit/${user.id}" class="btn btn-warning">Edytuj</a></td>--%>
-<%--            <td><a href="/user/delete/${user.id}" class="btn btn-danger">Usuń</a></td>--%>
             <td>
-                <form:form action="${pageContext.request.contextPath}/admin/users/points" method="post" style="display:inline;">
+                <form:form action="${pageContext.request.contextPath}/admin/users/points" method="post"
+                           style="display:inline;">
                     <input type="hidden" name="userId" value="${user.id}">
                     <input type="number" name="points" placeholder="Punkty">
                     <button type="submit" class="btn btn-primary btn-sm">Zaktualizuj punkty</button>
                 </form:form>
-                <a href="${pageContext.request.contextPath}/admin/points-history?userId=${user.id}" class="btn btn-info btn-sm">Historia punktów</a>
+
+                <a href="${pageContext.request.contextPath}/admin/points-history?userId=${user.id}"
+                   class="btn btn-info btn-sm">Historia punktów</a>
             </td>
         </tr>
     </c:forEach>
